@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import spring.boot.api.nger.resource.UserResource;
 
 @Repository
-public interface UserRepository extends JpaRepository<Long, UserResource> {
+public interface UserRepository extends JpaRepository<UserResource, Long> {
 
 }

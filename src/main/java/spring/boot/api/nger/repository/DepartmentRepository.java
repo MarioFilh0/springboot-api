@@ -5,5 +5,6 @@ import org.springframework.stereotype.Repository;
 import spring.boot.api.nger.resource.DepartmentResource;
 
 @Repository
-public interface DepartmentRepository extends JpaRepository<Long, DepartmentResource> {
+public interface DepartmentRepository extends JpaRepository<DepartmentResource, Long> {
+
 }
