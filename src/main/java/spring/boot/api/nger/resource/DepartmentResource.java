@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "tb_user")
-public class UserResource {
+@Table(name = "tb_department")
+public class DepartmentResource {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,13 +21,7 @@ public class UserResource {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String password;
-
-    @Column(nullable = false)
-    private String email;
-
-    @OneToOne(mappedBy = "user")
-    private DepartmentResource dep;
-
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserResource user;
 }
