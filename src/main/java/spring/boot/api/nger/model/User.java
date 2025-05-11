@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "tb_user")
-public class UserResource {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,5 +29,5 @@ public class UserResource {
 
     @OneToOne
     @JoinColumn(name = "dep_id")
-    private DepartmentResource dep;
+    private Department dep;
 }

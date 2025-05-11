@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "tb_department")
-public class DepartmentResource {
+public class Department {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,5 +23,5 @@ public class DepartmentResource {
 
 
     @OneToOne(mappedBy = "dep")
-    private UserResource user;
+    private User user;
 }
