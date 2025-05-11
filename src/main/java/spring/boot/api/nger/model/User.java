@@ -1,4 +1,4 @@
-package spring.boot.api.nger.resource;
+package spring.boot.api.nger.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class UserResource {
     @Column(nullable = false)
     private String email;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne
+    @JoinColumn(name = "dep_id")
     private DepartmentResource dep;
-
 }
