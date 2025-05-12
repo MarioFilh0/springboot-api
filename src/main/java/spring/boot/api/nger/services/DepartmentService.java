@@ -1,43 +1,55 @@
 package spring.boot.api.nger.services;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import spring.boot.api.nger.dto.DepartmentDTO;
+import spring.boot.api.nger.exceptions.EntityNotFoundException;
 import spring.boot.api.nger.model.Department;
+import spring.boot.api.nger.model.User;
 import spring.boot.api.nger.repository.DepartmentRepository;
+import spring.boot.api.nger.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
-
 
 @Service
 public class DepartmentService {
 
+    @Autowired
     private DepartmentRepository departmentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     public List<Department> getAll() {
         return departmentRepository.findAll();
     }
 
-    public Optional<Department> getById(Long id){
-        return Optional.ofNullable(departmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department not found")));
+    public Department getById(Long id){
+        return departmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Department not found"));
     }
 
     public void deleteById(Long id){
-        departmentRepository.deleteById(id);
+        Department dep = departmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Department not found"));
+        departmentRepository.delete(dep);
     }
 
     public Department create(Department dep) {
         return departmentRepository.save(dep);
     }
 
-    public Department update(Long id, Department department){
+    public Department update(Long id, DepartmentDTO dto){
         Department dep = departmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Department not found"));
 
-        dep.setUser(department.getUser());
-        dep.setName(department.getName());
-        return departmentRepository.save(dep);
+        dep.setName(dto.getName());
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found"));
+
+        dep.setUser(dto.set);
     }
 
 

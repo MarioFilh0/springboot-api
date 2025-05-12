@@ -1,5 +1,6 @@
 package spring.boot.api.nger.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class Department {
     @Column(nullable = false)
     private String name;
 
-
+    @JsonBackReference
     @OneToOne(mappedBy = "dep")
     private User user;
 }

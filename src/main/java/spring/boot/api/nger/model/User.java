@@ -27,7 +27,8 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "dep_id")
     private Department dep;
 }
