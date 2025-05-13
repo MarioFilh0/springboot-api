@@ -1,6 +1,5 @@
 package spring.boot.api.nger.Enums;
 
-import jakarta.persistence.Enumerated;
 
 public enum Role {
 
@@ -8,16 +7,13 @@ public enum Role {
     USER("user");
 
 
-    Role(String Role) {
+    private final String value;
 
+    Role(String value) {
+        this.value = value;
     }
 
-    public Role getAdmin(){
-        return ADMIN;
+    public String getValue() {
+        return value;
     }
-
-    public Role getUser(){
-        return USER;
-    }
-
 }
