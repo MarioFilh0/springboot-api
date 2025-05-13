@@ -1,24 +1,18 @@
-package spring.boot.api.nger.dto;
+    package spring.boot.api.nger.dto;
+
+    import jakarta.validation.constraints.NotBlank;
+    import lombok.*;
 
 
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @EqualsAndHashCode
+    public class DepartmentDTO {
 
-public class DepartmentDTO {
+        Long id;
 
-    private String name;
-
-
-    public String getName() {
-        return name;
+        @NotBlank(message = "Nome não pode estar em branco.")
+        private String name;
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public DepartmentDTO(String name) {
-        this.name = name;
-    }
-
-    public DepartmentDTO(){
-    }
-}
