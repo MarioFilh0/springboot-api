@@ -10,9 +10,7 @@
     @AllArgsConstructor
     @EqualsAndHashCode
     public class DepartmentDTO {
-
-        Long id;
-
-        @NotBlank(message = "Nome não pode estar em branco.")
+        private Long id;
+        @NotBlank(message = "Campo nome não pode estar em branco.")
         private String name;
     }

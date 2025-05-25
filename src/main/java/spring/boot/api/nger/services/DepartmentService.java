@@ -3,13 +3,15 @@ package spring.boot.api.nger.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import spring.boot.api.nger.Mapper.DepartmentMapper;
+import spring.boot.api.nger.exceptions.GlobalExceptionHandler;
+import spring.boot.api.nger.mapper.DepartmentMapper;
 import spring.boot.api.nger.dto.DepartmentDTO;
 import spring.boot.api.nger.exceptions.EntityNotFoundException;
 import spring.boot.api.nger.model.Department;
 import spring.boot.api.nger.repository.DepartmentRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class DepartmentService {
@@ -20,18 +22,23 @@ public class DepartmentService {
     @Autowired
     private DepartmentMapper departmentMapper;
 
-    public List<Department> findAll() {
-        return departmentRepository.findAll();
+    public List<DepartmentDTO> findAll() {
+        return departmentRepository.findAll()
+                .stream()
+                .map(departmentMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Department findById(Long id){
-        return departmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Department not found"));
+    public DepartmentDTO findById(Long id){
+        Department dep = departmentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Entity ID:"+id+" not found"));
+
+        return departmentMapper.toDto(dep);
     }
 
     public void deleteById(Long id){
         Department dep = departmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Department not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Entity ID:"+id+" not found"));
         departmentRepository.delete(dep);
     }
 
@@ -39,19 +46,13 @@ public class DepartmentService {
         departmentRepository.save(department);
     }
 
-    public Department update(Long id, DepartmentDTO dto){
-        //Busca o usuário
+    public DepartmentDTO update(Long id, DepartmentDTO dto){
         Department dep = departmentRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Department not found"));
+                        .orElseThrow(() -> new EntityNotFoundException("Entity ID:"+id+" not found"));
 
-        //Converte DTO em Entity para salvar no banco
-        Department update = departmentMapper.fromDto(dto);
-
-        //Aplica as atualizações
-        dep.setName(update.getName());
-
-        //Salva a atualização
-        return departmentRepository.save(dep);
+        departmentMapper.fromDto(dep, dto);
+        Department updated = departmentRepository.save(dep);
+        return departmentMapper.toDto(updated);
     }
 
 

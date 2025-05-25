@@ -1,4 +1,4 @@
-package spring.boot.api.nger.Mapper;
+package spring.boot.api.nger.mapper;
 
 import org.springframework.stereotype.Service;
 import spring.boot.api.nger.dto.DepartmentDTO;
@@ -18,13 +18,14 @@ public class DepartmentMapper {
         return dto;
     }
 
-    public Department fromDto(DepartmentDTO dto) {
+    public void fromDto(Department dep, DepartmentDTO dto) {
         if(dto == null) {
             throw new IllegalArgumentException("DTO can not be null!");
         }
 
-        Department dep = new Department();
-        dep.setName(dto.getName());
-        return dep;
+        if(dto.getName() != null){
+            dep.setName(dto.getName());
+        }
+
     }
 }

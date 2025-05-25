@@ -1,4 +1,4 @@
-package spring.boot.api.nger.Enums;
+package spring.boot.api.nger.enums;
 
 
 public enum Role {
